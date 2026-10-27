@@ -273,3 +273,33 @@ button{font:inherit}
   .price-line .price{font-size:21px}
 }
 
+/* CABEÇALHO: SOMENTE O LOGOTIPO */
+.site-header .brand-name {
+  display: none !important;
+}
+
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.site-header .brand img {
+  display: block;
+  width: 240px;
+  height: 70px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.site-header .brand-mark {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .site-header .brand img {
+    width: 190px;
+    height: 60px;
+  }
+}
+
