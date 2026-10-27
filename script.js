@@ -1,7 +1,7 @@
 
 /*
   MERCADO OLIVEIRA & KERNE — CONFIGURAÇÃO
-  Produtos, preços, endereço, WhatsApp e encarte.
+  Produtos, preços, imagens, endereço, WhatsApp e encarte.
 */
 
 const CONFIG = {
@@ -19,6 +19,7 @@ const CONFIG = {
       nome: "Arroz Camil 5 kg",
       categoria: "Mercearia",
       emoji: "🍚",
+      imagem: "camil.jpg",
       preco: "21.19",
       unidade: "pacote",
       selo: "OFERTA"
@@ -27,6 +28,7 @@ const CONFIG = {
       nome: "Café Mantiqueira 500 g",
       categoria: "Mercearia",
       emoji: "☕",
+      imagem: "Mantiqueira.jpeg",
       preco: "17.98",
       unidade: "pacote",
       selo: "OFERTA"
@@ -43,6 +45,7 @@ const CONFIG = {
       nome: "Feijão Camil 1 kg",
       categoria: "Mercearia",
       emoji: "🫘",
+      imagem: "feijaocamil.jpeg",
       preco: "7.49",
       unidade: "pacote",
       selo: "OFERTA"
@@ -51,6 +54,7 @@ const CONFIG = {
       nome: "Óleo Soya 900 ml",
       categoria: "Mercearia",
       emoji: "🫒",
+      imagem: "soya.jpeg",
       preco: "7.78",
       unidade: "unidade",
       selo: "OFERTA"
@@ -234,6 +238,27 @@ function renderProducts() {
   grid.innerHTML = items.map(product => {
     const price = money(product.preco);
 
+    const visual = product.imagem
+      ? `
+        <img
+          class="product-image"
+          src="./${escapeHTML(product.imagem)}"
+          alt="${escapeHTML(product.nome)}"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <span
+          class="product-emoji product-emoji-fallback"
+          aria-hidden="true"
+          style="display:none"
+        >${product.emoji || "🛒"}</span>
+      `
+      : `
+        <span class="product-emoji" aria-hidden="true">
+          ${product.emoji || "🛒"}
+        </span>
+      `;
+
     return `
       <article class="product-card">
         <div class="product-visual">
@@ -241,9 +266,7 @@ function renderProducts() {
             ${escapeHTML(product.selo || "OFERTA")}
           </span>
 
-          <span class="product-emoji" aria-hidden="true">
-            ${product.emoji || "🛒"}
-          </span>
+          ${visual}
         </div>
 
         <div class="product-info">
