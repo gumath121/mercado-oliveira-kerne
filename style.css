@@ -14,23 +14,27 @@
   line-height: 0;
 }
 
+
 .store-banner img {
   display: block;
   width: 100%;
-  height: clamp(200px, 32vw, 440px);
-  object-fit: cover;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
   object-position: center;
 }
 
-/* Conteúdo promocional vem abaixo da foto */
+/* Conteúdo promocional abaixo da foto */
 .store-banner + .hero {
   margin-top: 0;
 }
 
 @media (max-width: 700px) {
   .store-banner img {
+    width: 100%;
     height: auto;
     max-height: none;
     object-fit: contain;
   }
 }
+
