@@ -4,3 +4,33 @@
 @media(max-width:360px){.hero h1{font-size:42px}.hero-actions .btn{width:100%}.product-grid{gap:8px}.product-visual{height:112px}.product-emoji{font-size:50px}.product-info h3{font-size:12px}.price-line .price{font-size:21px}}
 
 .opening-hours{display:flex;flex-direction:column;gap:7px;margin-top:16px;padding:14px 16px;background:#fff7dc;border-left:4px solid var(--yellow);border-radius:8px;font-size:13px;color:#484848}.opening-hours>strong{font-size:10px;letter-spacing:1px;color:var(--red);margin-bottom:2px}.opening-hours span{line-height:1.4}.opening-hours b{color:#252525}
+
+/* Banner principal de ponta a ponta */
+.store-banner {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.store-banner img {
+  display: block;
+  width: 100%;
+  height: clamp(200px, 32vw, 440px);
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Conteúdo promocional vem abaixo da foto */
+.store-banner + .hero {
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .store-banner img {
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+  }
+}
