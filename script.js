@@ -593,11 +593,6 @@ function renderizarProdutos(filtro = "Todos") {
   });
 }
 
-  if (!produtosFiltrados.length) {
-    grade.innerHTML = '<p class="empty-products">Nenhum produto encontrado nesta categoria.</p>';
-    return;
-  }
-
   grade.innerHTML = produtosFiltrados.map(produto => {
     const imagem = produto.imagem
       ? `<img class="product-image" src="./${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`
