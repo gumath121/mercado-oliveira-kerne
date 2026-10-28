@@ -1,405 +1,212 @@
 
-/*
-  MERCADO OLIVEIRA & KERNE — CONFIGURAÇÃO
-  Produtos, preços, imagens, endereço, WhatsApp e encarte.
-*/
-
 const CONFIG = {
   whatsapp: "5515997342383",
-
   endereco: "Rua Alberto Ernesto Guinther, 86 - Rechan, Itapetininga - SP",
-
   mapaUrl: "https://www.google.com/maps/search/?api=1&query=Rua%20Alberto%20Ernesto%20Guinther%2C%2086%2C%20Rechan%2C%20Itapetininga%20SP",
-
-  encarteImagem: "",
 
   produtos: [
     // MERCEARIA
-    {
-      nome: "Arroz Camil 5 kg",
-      categoria: "Mercearia",
-      emoji: "🍚",
-      imagem: "camil.jpg",
-      preco: "21.19",
-      unidade: "pacote",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Café Mantiqueira 500 g",
-      categoria: "Mercearia",
-      emoji: "☕",
-      imagem: "Mantiqueira.jpeg",
-      preco: "17.98",
-      unidade: "pacote",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Açúcar cristal 5 kg",
-      categoria: "Mercearia",
-      emoji: "🛍️",
-      preco: "13.48",
-      unidade: "pacote",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Feijão Camil 1 kg",
-      categoria: "Mercearia",
-      emoji: "🫘",
-      imagem: "feijaocamil.jpeg",
-      preco: "7.49",
-      unidade: "pacote",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Óleo Soya 900 ml",
-      categoria: "Mercearia",
-      emoji: "🫒",
-      imagem: "soya.jpeg",
-      preco: "7.78",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Leite condensado Italac 395 g",
-      categoria: "Mercearia",
-      emoji: "🥫",
-      preco: "6.48",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Creme de leite Piracanjuba 200 g",
-      categoria: "Mercearia",
-      emoji: "🥛",
-      preco: "2.89",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Ketchup Quero",
-      categoria: "Mercearia",
-      emoji: "🍅",
-      preco: "12.99",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
+    { nome: "Arroz Camil 5 kg", categoria: "Mercearia", imagem: "camil.jpg", preco: 21.19, unidade: "pacote" },
+    { nome: "Café Mantiqueira 500 g", categoria: "Mercearia", imagem: "Mantiqueira.jpg", preco: 17.98, unidade: "pacote" },
+    { nome: "Açúcar cristal 5 kg", categoria: "Mercearia", imagem: "cristal.jpg", preco: 13.48, unidade: "pacote" },
+    { nome: "Feijão Camil 1 kg", categoria: "Mercearia", imagem: "feijaocamil.jpg", preco: 7.49, unidade: "pacote" },
+    { nome: "Óleo de soja Soya 900 ml", categoria: "Mercearia", imagem: "soya.jpg", preco: 7.78, unidade: "unidade" },
+    { nome: "Leite condensado Italac 395 g", categoria: "Mercearia", imagem: "leiteconditalac.jpg", preco: 6.48, unidade: "unidade" },
+    { nome: "Ketchup Quero 1,28 kg", categoria: "Mercearia", imagem: "kectchupquero.jpg", preco: 12.99, unidade: "unidade" },
+    { nome: "Ketchup Quero", categoria: "Mercearia", imagem: "ketchupquero.png", preco: 12.99, unidade: "unidade" },
+    { nome: "Creme de leite Piracanjuba 200 g", categoria: "Mercearia", imagem: "cremeleitepiracanjuba.png", preco: 2.89, unidade: "unidade" },
+    { nome: "Milho verde Quero", categoria: "Mercearia", imagem: "queromilho.png", preco: 2.99, unidade: "lata" },
+    { nome: "Molho de tomate Fugini", categoria: "Mercearia", imagem: "fuginimolho.png", preco: 1.69, unidade: "unidade" },
+    { nome: "Feijão Campeão do Sul 1 kg", categoria: "Mercearia", imagem: "campeaofeijao.png", preco: 7.49, unidade: "pacote" },
+    { nome: "Arroz Campeão do Sul 5 kg", categoria: "Mercearia", imagem: "arrozcampeaodosul.png", preco: 21.19, unidade: "pacote" },
+    { nome: "Maionese Heinz", categoria: "Mercearia", imagem: "maioneseheinz.png", preco: 10.49, unidade: "unidade" },
+    { nome: "Maionese Hellmann's", categoria: "Mercearia", imagem: "maionesehelmmans.png", preco: 9.98, unidade: "unidade" },
+    { nome: "Requeijão Nestlé (copo)", categoria: "Mercearia", imagem: "requeijaonestle.png", preco: 10.98, unidade: "unidade" },
+    { nome: "Leite Parmalat", categoria: "Mercearia", imagem: "parmalatleite.png", preco: null, unidade: "unidade" },
+    { nome: "Óleo de soja Vitaliv 900 ml", categoria: "Mercearia", imagem: "oleovitaliv.png", preco: 7.79, unidade: "unidade" },
+    { nome: "Açúcar cristal Twister 5 kg", categoria: "Mercearia", imagem: "acucartwister.png", preco: 13.48, unidade: "pacote" },
+    { nome: "Pó de café Montana", categoria: "Mercearia", imagem: "pocafemontana.png", preco: 17.98, unidade: "pacote" },
+    { nome: "Biscoito Wino Panco", categoria: "Mercearia", imagem: "pancodeliciosos.png", preco: 8.29, unidade: "pacote" },
+    { nome: "Pão de forma Panco", categoria: "Mercearia", imagem: "paoformapanco.png", preco: 9.29, unidade: "pacote" },
+    { nome: "Wafer Bauducco", categoria: "Mercearia", imagem: "waferbauducco.png", preco: 3.29, unidade: "pacote" },
+    { nome: "Bolinho Bauducco", categoria: "Mercearia", imagem: "baby.png", preco: 1.98, unidade: "unidade" },
+    { nome: "Panetone Parati", categoria: "Mercearia", imagem: "panetoneparati.png", preco: 19.98, unidade: "unidade" },
+    { nome: "Bis", categoria: "Mercearia", imagem: "bis.png", preco: 6.48, unidade: "caixa" },
+    { nome: "Chocolate Clássicos Panco", categoria: "Mercearia", imagem: "chococlassicospanco.png", preco: 4.98, unidade: "unidade" },
+    { nome: "Dadinho", categoria: "Mercearia", imagem: "dadinho.png", preco: 12.49, unidade: "unidade" },
+    { nome: "Nobreli Duo", categoria: "Mercearia", imagem: "nobrelliduo.png", preco: 12.99, unidade: "unidade" },
+    { nome: "Suco Trink", categoria: "Bebidas", imagem: "sucotrink.png", preco: 0.89, unidade: "unidade" },
+    { nome: "Refrigerante Kuat 2 L", categoria: "Bebidas", imagem: "Kuat.png", preco: 5.49, unidade: "garrafa" },
+    { nome: "Iogurte Nestlé (bandeja)", categoria: "Mercearia", imagem: "requeijaonestle.png", preco: 8.98, unidade: "bandeja" },
 
     // LIMPEZA
-    {
-      nome: "Sabão em pó Brilhante 800 g",
-      categoria: "Limpeza",
-      emoji: "🧺",
-      preco: "10.48",
-      unidade: "sachê",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Sabão em pó Tixan 1,6 kg",
-      categoria: "Limpeza",
-      emoji: "🧼",
-      preco: "19.98",
-      unidade: "caixa",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Sabão em pó Tixan 400 g",
-      categoria: "Limpeza",
-      emoji: "🧼",
-      preco: "4.99",
-      unidade: "pacote",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Omo líquido 750 ml",
-      categoria: "Limpeza",
-      emoji: "🧴",
-      preco: "16.98",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Amaciante Comfort 700 ml",
-      categoria: "Limpeza",
-      emoji: "🧴",
-      preco: "13.99",
-      unidade: "sachê",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Água sanitária Triex 2 L",
-      categoria: "Limpeza",
-      emoji: "🧴",
-      preco: "4.99",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Desinfetante Triex 2 L",
-      categoria: "Limpeza",
-      emoji: "🧴",
-      preco: "4.89",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
+    { nome: "Sabão em pó Brilhante (sachê) 800 g", categoria: "Limpeza", imagem: "brilhante.jpg", preco: 10.48, unidade: "sachê" },
+    { nome: "Sabão em pó Tixan 400 g", categoria: "Limpeza", imagem: "tixan400.jpg", preco: 4.99, unidade: "pacote" },
+    { nome: "Sabão em pó Tixan 1,6 kg", categoria: "Limpeza", imagem: "tixan1600.jpg", preco: 19.98, unidade: "caixa" },
+    { nome: "Omo líquido 750 ml", categoria: "Limpeza", imagem: "omoliquido.jpg", preco: 16.98, unidade: "unidade" },
+    { nome: "Omo líquido", categoria: "Limpeza", imagem: "omoliq.png", preco: 16.98, unidade: "unidade" },
+    { nome: "Amaciante Downy", categoria: "Limpeza", imagem: "amaciantedowny.png", preco: 12.98, unidade: "unidade" },
+    { nome: "Amaciante Ypê 2 L", categoria: "Limpeza", imagem: "amacianteype2l.png", preco: 10.79, unidade: "unidade" },
+    { nome: "Amaciante Comfort", categoria: "Limpeza", imagem: "amacianteconfort.png", preco: 13.99, unidade: "unidade" },
+    { nome: "Comfort Boom", categoria: "Limpeza", imagem: "comfortboom.png", preco: 17.98, unidade: "unidade" },
+    { nome: "Amaciante", categoria: "Limpeza", imagem: "amacianteconfort.png", preco: 10.79, unidade: "unidade" },
+    { nome: "Água sanitária Triex 2 L", categoria: "Limpeza", imagem: "aguasanitariatriex.png", preco: 4.99, unidade: "unidade" },
+    { nome: "Desinfetante Triex 2 L", categoria: "Limpeza", imagem: "desinfetantetriex.png", preco: 4.89, unidade: "unidade" },
+    { nome: "Limpador perfumado Triex", categoria: "Limpeza", imagem: "perfumadotriex.png", preco: 3.19, unidade: "unidade" },
+    { nome: "Limpador multiuso UAU", categoria: "Limpeza", imagem: "limpadormultiusouau.png", preco: 3.98, unidade: "unidade" },
+    { nome: "Desinfetante multisuperfície", categoria: "Limpeza", imagem: "perfumadotriex.png", preco: 4.98, unidade: "unidade" },
+    { nome: "Detergente Limpol", categoria: "Limpeza", imagem: null, preco: 2.49, unidade: "unidade" },
+    { nome: "Cera Brilho Fácil", categoria: "Limpeza", imagem: "cerabrilhofacil.png", preco: 15.98, unidade: "unidade" },
+    { nome: "Sabão líquido Vida Macia infantil", categoria: "Limpeza", imagem: "sabaoliquidovidamacia.png", preco: 12.49, unidade: "unidade" },
 
-    // HIGIENE
-    {
-      nome: "Creme dental Colgate Tripla Ação 180 g",
-      categoria: "Higiene",
-      emoji: "🪥",
-      preco: "8.29",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Sabonete Palmolive 85 g",
-      categoria: "Higiene",
-      emoji: "🧼",
-      preco: "2.79",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
-    {
-      nome: "Shampoo Monange 325 ml",
-      categoria: "Higiene",
-      emoji: "🧴",
-      preco: "6.98",
-      unidade: "unidade",
-      selo: "OFERTA"
-    },
+    // HIGIENE E CUIDADOS PESSOAIS
+    { nome: "Creme dental Colgate Tripla Ação 180 g", categoria: "Higiene", imagem: "colgate.png", preco: 8.29, unidade: "unidade" },
+    { nome: "Sabonete Palmolive 85 g", categoria: "Higiene", imagem: "palmolivesabonete.png", preco: 2.79, unidade: "unidade" },
+    { nome: "Desodorante Axe", categoria: "Higiene", imagem: "axedesodorante.png", preco: 9.29, unidade: "unidade" },
+    { nome: "Desodorante Monange", categoria: "Higiene", imagem: "desodorantemonange.png", preco: 10.89, unidade: "unidade" },
+    { nome: "Shampoo Monange", categoria: "Higiene", imagem: "monageshampoo.png", preco: 6.98, unidade: "unidade" },
+    { nome: "Condicionador Monange", categoria: "Higiene", imagem: "condicionadormonange.png", preco: 7.98, unidade: "unidade" },
+    { nome: "Hidratante Monange", categoria: "Higiene", imagem: "monangecondicionador.png", preco: 7.98, unidade: "unidade" },
+    { nome: "Creme para pentear Elseve", categoria: "Higiene", imagem: "cremepentearelseve.png", preco: 17.49, unidade: "unidade" },
+    { nome: "Kit shampoo Muel Baby", categoria: "Higiene", imagem: "baby.png", preco: 19.98, unidade: "kit" },
+    { nome: "Papel higiênico Mili", categoria: "Higiene", imagem: "milipapelhigienico.png", preco: 12.49, unidade: "pacote" },
+    { nome: "Fralda Turma da Mônica", categoria: "Higiene", imagem: "Fraldamonicababy.png", preco: 24.99, unidade: "pacote" },
+    { nome: "Creme dental Barbie / Galinha Pintadinha", categoria: "Higiene", imagem: "galinhapintadinha.png", preco: 4.98, unidade: "unidade" },
 
-    // AÇOUGUE
-    {
-      nome: "Bisteca suína",
-      categoria: "Açougue",
-      emoji: "🥩",
-      preco: "18.99",
-      unidade: "kg",
-      selo: "OFERTA"
-    }
+    // AÇOUGUE E CONGELADOS
+    { nome: "Bisteca suína", categoria: "Açougue", imagem: "bistecasuina.jpg", preco: 18.99, unidade: "kg" },
+    { nome: "Bisteca bovina", categoria: "Açougue", imagem: "bistecasuina.jpg", preco: 34.98, unidade: "kg" },
+    { nome: "Costela bovina", categoria: "Açougue", imagem: "costelabovina.png", preco: 29.99, unidade: "kg" },
+    { nome: "Carne moída", categoria: "Açougue", imagem: "carnemoida.png", preco: 31.99, unidade: "kg" },
+    { nome: "Picadão bovino", categoria: "Açougue", imagem: "picadaobovino.png", preco: 33.98, unidade: "kg" },
+    { nome: "Bacon Perdigão", categoria: "Açougue", imagem: "bacon.png", preco: null, unidade: "unidade" },
+    { nome: "Frango congelado inteiro", categoria: "Açougue", imagem: "frangointeiro.png", preco: null, unidade: "kg" },
+    { nome: "Coxa e sobrecoxa", categoria: "Açougue", imagem: "sobrecoxa.png", preco: null, unidade: "kg" },
+    { nome: "Pão de alho", categoria: "Mercearia", imagem: "paodealho.png", preco: null, unidade: "pacote" },
+    { nome: "Linguiça para churrasco Rezende", categoria: "Açougue", imagem: "linguiça.png", preco: null, unidade: "kg" }
   ]
 };
 
-
-// ELEMENTOS DO SITE
-const grid = document.getElementById("productGrid");
-let activeFilter = "Todos";
-
-
-// FORMATAÇÃO DE PREÇOS
-function money(value) {
-  if (value === "" || value === null || value === undefined) {
-    return "—";
+function formatarPreco(valor) {
+  if (valor === null || valor === undefined || valor === "") {
+    return "Preço a consultar";
   }
 
-  const number = Number(String(value).replace(",", "."));
-
-  if (!Number.isFinite(number)) {
-    return "—";
-  }
-
-  return number.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
+  return Number(valor).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
   });
 }
 
+function criarLinkWhatsApp(produto) {
+  const preco = produto.preco == null
+    ? "Preço a consultar"
+    : formatarPreco(produto.preco) + (produto.unidade === "kg" ? "/kg" : "");
 
-// PROTEÇÃO DE TEXTO HTML
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, c => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  }[c]));
+  const mensagem = `Olá! Gostaria de informações sobre ${produto.nome}. Preço informado no site: ${preco}.`;
+  return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
+function renderizarProdutos(filtro = "Todos") {
+  const grade = document.getElementById("productGrid");
+  if (!grade) return;
 
-// EXIBIÇÃO DOS PRODUTOS
-function renderProducts() {
-  if (!grid) return;
-
-  const items = CONFIG.produtos.filter(product =>
-    activeFilter === "Todos" ||
-    product.categoria === activeFilter
+  const produtosFiltrados = CONFIG.produtos.filter(produto =>
+    filtro === "Todos" || produto.categoria === filtro
   );
 
-  if (items.length === 0) {
-    grid.innerHTML = `
-      <p class="empty-products">
-        Nenhum produto encontrado nesta categoria.
-      </p>
-    `;
+  if (!produtosFiltrados.length) {
+    grade.innerHTML = '<p class="empty-products">Nenhum produto encontrado nesta categoria.</p>';
     return;
   }
 
-  grid.innerHTML = items.map(product => {
-    const price = money(product.preco);
-
-    const visual = product.imagem
-      ? `
-        <img
-          class="product-image"
-          src="./${escapeHTML(product.imagem)}"
-          alt="${escapeHTML(product.nome)}"
-          loading="lazy"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-        >
-        <span
-          class="product-emoji product-emoji-fallback"
-          aria-hidden="true"
-          style="display:none"
-        >${product.emoji || "🛒"}</span>
-      `
-      : `
-        <span class="product-emoji" aria-hidden="true">
-          ${product.emoji || "🛒"}
-        </span>
-      `;
+  grade.innerHTML = produtosFiltrados.map(produto => {
+    const imagem = produto.imagem
+      ? `<img class="product-image" src="./${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`
+      : "";
 
     return `
       <article class="product-card">
-        <div class="product-visual">
-          <span class="product-badge">
-            ${escapeHTML(product.selo || "OFERTA")}
-          </span>
-
-          ${visual}
+        <div class="product-photo">
+          ${imagem}
+          <div class="product-emoji" style="${produto.imagem ? "display:none" : "display:flex"}">🛒</div>
+          <span class="product-badge">OFERTA</span>
         </div>
-
         <div class="product-info">
-          <span class="product-category">
-            ${escapeHTML(product.categoria || "Produtos")}
-          </span>
-
-          <h3>${escapeHTML(product.nome)}</h3>
-
-          <div class="price-line">
-            <span class="currency">R$</span>
-            <span class="price">${price}</span>
-            <span class="unit">
-              / ${escapeHTML(product.unidade || "unidade")}
-            </span>
-          </div>
-
-          <div class="product-edit-note">
-            ${product.preco === ""
-              ? "Preço a confirmar com o mercado"
-              : "Consulte a validade da oferta"}
-          </div>
+          <span class="product-category">${produto.categoria}</span>
+          <h3 class="product-name">${produto.nome}</h3>
+          <div class="product-price">${formatarPreco(produto.preco)}${produto.unidade === "kg" && produto.preco != null ? '<small>/kg</small>' : ""}</div>
+          <a class="product-whatsapp" href="${criarLinkWhatsApp(produto)}" target="_blank" rel="noopener">
+            Consultar pelo WhatsApp ↗
+          </a>
         </div>
       </article>
     `;
   }).join("");
 }
 
-
-// FILTROS DE CATEGORIA
-document.querySelectorAll("[data-filter]").forEach(button => {
-  button.addEventListener("click", () => {
-    activeFilter = button.dataset.filter;
-
-    document.querySelectorAll("[data-filter]").forEach(item => {
-      item.classList.toggle("active", item === button);
+function configurarFiltros() {
+  document.querySelectorAll("[data-filter]").forEach(botao => {
+    botao.addEventListener("click", () => {
+      document.querySelectorAll("[data-filter]").forEach(item => item.classList.remove("active"));
+      botao.classList.add("active");
+      renderizarProdutos(botao.dataset.filter);
     });
-
-    renderProducts();
   });
-});
-
-
-// WHATSAPP
-function whatsappURL(message) {
-  return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
-document.querySelectorAll("[data-whatsapp]").forEach(link => {
-  link.href = whatsappURL(
-    "Olá! Acessei o site do Mercado Oliveira & Kerne e gostaria de informações sobre as ofertas."
-  );
+function configurarWhatsApp() {
+  const mensagem = encodeURIComponent("Olá! Vim pelo site do Mercado Oliveira & Kerne e gostaria de informações.");
+  const link = `https://wa.me/${CONFIG.whatsapp}?text=${mensagem}`;
 
-  link.target = "_blank";
-  link.rel = "noopener";
-});
-
-
-// ENDEREÇO E MAPA
-const addressText = document.getElementById("addressText");
-const mapLink = document.getElementById("mapLink");
-
-if (addressText) {
-  addressText.textContent = CONFIG.endereco;
+  document.querySelectorAll("[data-whatsapp]").forEach(elemento => {
+    elemento.href = link;
+    elemento.target = "_blank";
+    elemento.rel = "noopener";
+  });
 }
 
-if (mapLink) {
-  mapLink.href = CONFIG.mapaUrl.trim() ||
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.endereco)}`;
+function configurarMenu() {
+  const botao = document.getElementById("menuToggle");
+  const menu = document.getElementById("mainNav");
 
-  mapLink.target = "_blank";
-  mapLink.rel = "noopener";
+  if (!botao || !menu) return;
+
+  botao.addEventListener("click", () => {
+    const aberto = menu.classList.toggle("open");
+    botao.setAttribute("aria-expanded", String(aberto));
+    botao.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+    botao.textContent = aberto ? "✕" : "☰";
+  });
+
+  menu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      menu.classList.remove("open");
+      botao.setAttribute("aria-expanded", "false");
+      botao.setAttribute("aria-label", "Abrir menu");
+      botao.textContent = "☰";
+    });
+  });
 }
 
+function inicializarSite() {
+  renderizarProdutos();
+  configurarFiltros();
+  configurarWhatsApp();
+  configurarMenu();
 
-// ENCARTE DIGITAL
-if (CONFIG.encarteImagem.trim()) {
-  const preview = document.querySelector(".flyer-paper");
+  const ano = document.getElementById("year");
+  if (ano) ano.textContent = new Date().getFullYear();
 
-  if (preview) {
-    const image = document.createElement("img");
+  const endereco = document.getElementById("addressText");
+  if (endereco) endereco.textContent = CONFIG.endereco;
 
-    image.src = CONFIG.encarteImagem;
-    image.alt = "Encarte de ofertas do Mercado Oliveira & Kerne";
-    image.style.width = "100%";
-    image.style.height = "100%";
-    image.style.objectFit = "contain";
-    image.style.display = "block";
-
-    preview.replaceChildren(image);
-    preview.style.padding = "0";
-    preview.style.background = "transparent";
+  const mapa = document.getElementById("mapLink");
+  if (mapa) {
+    mapa.href = CONFIG.mapaUrl;
+    mapa.target = "_blank";
+    mapa.rel = "noopener";
   }
 }
 
-
-// ANO AUTOMÁTICO NO RODAPÉ
-const yearElement = document.getElementById("year");
-
-if (yearElement) {
-  yearElement.textContent = new Date().getFullYear();
-}
-
-
-// MENU PARA CELULARES
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
-
-if (menuToggle && mainNav) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = mainNav.classList.toggle("open");
-
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Fechar menu" : "Abrir menu"
-    );
-
-    menuToggle.textContent = isOpen ? "×" : "☰";
-  });
-
-  mainNav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      mainNav.classList.remove("open");
-
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.setAttribute("aria-label", "Abrir menu");
-
-      menuToggle.textContent = "☰";
-    });
-  });
-}
-
-
-// INICIALIZAÇÃO
-renderProducts();
+document.addEventListener("DOMContentLoaded", inicializarSite);
