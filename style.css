@@ -405,3 +405,30 @@ button{font:inherit}
     font-size: 22px;
   }
 }
+
+/* BOTÃO ADICIONAR À LISTA */
+.add-to-shopping-list {
+  width: 100%;
+  min-height: 42px;
+  margin: 0 0 10px;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #147b43;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.add-to-shopping-list:hover {
+  background: #0f6335;
+  transform: translateY(-1px);
+}
+
+.add-to-shopping-list:active {
+  transform: scale(.98);
+}
+
