@@ -105,6 +105,436 @@ function criarLinkWhatsApp(produto) {
   return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
+/* =========================================
+   LISTA DE COMPRAS — MERCADO OLIVEIRA & KERNE
+========================================= */
+
+let listaCompras = [];
+
+try {
+  listaCompras = JSON.parse(localStorage.getItem("mercadoOK_listaCompras")) || [];
+} catch {
+  listaCompras = [];
+}
+
+function salvarListaCompras() {
+  try {
+    localStorage.setItem(
+      "mercadoOK_listaCompras",
+      JSON.stringify(listaCompras)
+    );
+  } catch (erro) {
+    console.warn("Não foi possível salvar a lista neste navegador.");
+  }
+}
+
+function moeda(valor) {
+  return valor == null
+    ? "A consultar"
+    : valor.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      });
+}
+
+function quantidadeNaLista(nome) {
+  const item = listaCompras.find(p => p.nome === nome);
+  return item ? item.quantidade : 0;
+}
+
+function adicionarProduto(nome) {
+  const produto = CONFIG.produtos.find(p => p.nome === nome);
+  if (!produto) return;
+
+  const existente = listaCompras.find(p => p.nome === nome);
+
+  if (existente) {
+    existente.quantidade++;
+  } else {
+    listaCompras.push({
+      nome: produto.nome,
+      preco: produto.preco,
+      unidade: produto.unidade,
+      quantidade: 1
+    });
+  }
+
+  salvarListaCompras();
+  atualizarCarrinho();
+  renderizarProdutos(
+    document.querySelector("[data-filter].active")?.dataset.filter || "Todos"
+  );
+}
+
+function alterarQuantidade(nome, variacao) {
+  const item = listaCompras.find(p => p.nome === nome);
+  if (!item) return;
+
+  item.quantidade += variacao;
+
+  if (item.quantidade <= 0) {
+    listaCompras = listaCompras.filter(p => p.nome !== nome);
+  }
+
+  salvarListaCompras();
+  atualizarCarrinho();
+  renderizarProdutos(
+    document.querySelector("[data-filter].active")?.dataset.filter || "Todos"
+  );
+}
+
+function removerProduto(nome) {
+  listaCompras = listaCompras.filter(p => p.nome !== nome);
+  salvarListaCompras();
+  atualizarCarrinho();
+  renderizarProdutos(
+    document.querySelector("[data-filter].active")?.dataset.filter || "Todos"
+  );
+}
+
+function totalLista() {
+  return listaCompras.reduce((total, item) => {
+    return total + (item.preco == null ? 0 : item.preco * item.quantidade);
+  }, 0);
+}
+
+function quantidadeTotal() {
+  return listaCompras.reduce((total, item) => total + item.quantidade, 0);
+}
+
+/* Cria o botão flutuante e a janela da lista */
+function configurarCarrinho() {
+  if (document.getElementById("shoppingCartButton")) return;
+
+  const estilo = document.createElement("style");
+  estilo.textContent = `
+    #shoppingCartButton {
+      position:fixed; right:22px; bottom:92px; z-index:40;
+      display:flex; align-items:center; gap:10px;
+      border:0; border-radius:999px; padding:14px 19px;
+      background:#147b43; color:white; font-weight:900;
+      box-shadow:0 5px 20px #0003; cursor:pointer;
+    }
+    #shoppingCartButton .cart-count {
+      display:grid; place-items:center; min-width:25px; height:25px;
+      padding:0 5px; background:#ffd52a; color:#242424;
+      border-radius:50%; font-size:12px;
+    }
+    #shoppingCartPanel {
+      display:none; position:fixed; inset:0; z-index:100;
+      background:#0008; align-items:center; justify-content:center;
+      padding:14px;
+    }
+    #shoppingCartPanel.open { display:flex; }
+    .cart-window {
+      background:white; width:min(100%,520px); max-height:90vh;
+      overflow:auto; border-radius:18px; padding:22px;
+      box-shadow:0 15px 50px #0003;
+    }
+    .cart-heading {
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; margin-bottom:16px;
+    }
+    .cart-heading h2 { margin:0; font-size:23px; }
+    .cart-close {
+      border:0; background:#f1f1f1; border-radius:50%;
+      width:38px; height:38px; font-size:22px; cursor:pointer;
+    }
+    .cart-item {
+      display:grid; grid-template-columns:1fr auto; gap:8px;
+      padding:13px 0; border-bottom:1px solid #eee;
+    }
+    .cart-item-name { font-weight:800; }
+    .cart-item-price { color:#666; font-size:12px; margin-top:4px; }
+    .cart-item-actions {
+      display:flex; align-items:center; gap:9px;
+    }
+    .cart-item-actions button {
+      width:30px; height:30px; border:0; border-radius:8px;
+      background:#f1f1f1; font-weight:900; cursor:pointer;
+    }
+    .cart-remove {
+      grid-column:1/-1; justify-self:start; border:0;
+      background:none; color:#c71925; padding:4px 0;
+      font-size:12px; cursor:pointer;
+    }
+    .cart-total {
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px; padding:18px 0; font-weight:900; font-size:18px;
+    }
+    .cart-note { color:#777; font-size:12px; line-height:1.5; }
+    .cart-actions { display:grid; gap:9px; margin-top:14px; }
+    .cart-action-button {
+      display:block; width:100%; padding:14px; border:0;
+      border-radius:10px; font-weight:900; cursor:pointer;
+    }
+    .cart-generate { background:#147b43; color:white; }
+    .cart-clear { background:#f1f1f1; color:#333; }
+    .cart-empty { text-align:center; color:#777; padding:30px 8px; }
+    @media(max-width:600px) {
+      #shoppingCartButton { right:14px; bottom:80px; padding:12px 15px; }
+      .cart-window { padding:17px; }
+    }
+  `;
+  document.head.appendChild(estilo);
+
+  const botao = document.createElement("button");
+  botao.id = "shoppingCartButton";
+  botao.type = "button";
+  botao.innerHTML = '🛒 Minha lista <span class="cart-count" id="cartCount">0</span>';
+  botao.addEventListener("click", abrirCarrinho);
+  document.body.appendChild(botao);
+
+  const painel = document.createElement("div");
+  painel.id = "shoppingCartPanel";
+  painel.innerHTML = `
+    <section class="cart-window" role="dialog" aria-modal="true"
+      aria-labelledby="cartTitle">
+      <div class="cart-heading">
+        <h2 id="cartTitle">🛒 Minha lista de compras</h2>
+        <button class="cart-close" id="cartClose" aria-label="Fechar">×</button>
+      </div>
+      <div id="cartItems"></div>
+      <div id="cartSummary"></div>
+      <div class="cart-actions">
+        <button class="cart-action-button cart-generate" id="generateShoppingList">
+          📸 Gerar lista em JPG
+        </button>
+        <button class="cart-action-button cart-clear" id="clearShoppingList">
+          Limpar lista
+        </button>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(painel);
+
+  document.getElementById("cartClose").addEventListener("click", fecharCarrinho);
+
+  painel.addEventListener("click", evento => {
+    if (evento.target === painel) fecharCarrinho();
+  });
+
+  document.getElementById("cartItems").addEventListener("click", evento => {
+    const controle = evento.target.closest("[data-cart-action]");
+    if (!controle) return;
+
+    const nome = controle.dataset.name;
+    const acao = controle.dataset.cartAction;
+
+    if (acao === "mais") alterarQuantidade(nome, 1);
+    if (acao === "menos") alterarQuantidade(nome, -1);
+    if (acao === "remover") removerProduto(nome);
+  });
+
+  document.getElementById("clearShoppingList").addEventListener("click", () => {
+    if (!listaCompras.length) return;
+    if (!confirm("Deseja realmente limpar sua lista de compras?")) return;
+
+    listaCompras = [];
+    salvarListaCompras();
+    atualizarCarrinho();
+    renderizarProdutos(
+      document.querySelector("[data-filter].active")?.dataset.filter || "Todos"
+    );
+  });
+
+  document.getElementById("generateShoppingList")
+    .addEventListener("click", gerarListaJPG);
+
+  atualizarCarrinho();
+}
+
+function abrirCarrinho() {
+  document.getElementById("shoppingCartPanel")?.classList.add("open");
+  atualizarCarrinho();
+}
+
+function fecharCarrinho() {
+  document.getElementById("shoppingCartPanel")?.classList.remove("open");
+}
+
+function atualizarCarrinho() {
+  const contador = document.getElementById("cartCount");
+  const conteudo = document.getElementById("cartItems");
+  const resumo = document.getElementById("cartSummary");
+
+  if (!contador || !conteudo || !resumo) return;
+
+  contador.textContent = quantidadeTotal();
+
+  if (!listaCompras.length) {
+    conteudo.innerHTML = '<div class="cart-empty">Sua lista está vazia.<br>Adicione produtos pelo catálogo!</div>';
+    resumo.innerHTML = "";
+    return;
+  }
+
+  conteudo.innerHTML = listaCompras.map(item => `
+    <div class="cart-item">
+      <div>
+        <div class="cart-item-name">${escaparHTML(item.nome)}</div>
+        <div class="cart-item-price">
+          ${moeda(item.preco)}${item.unidade === "kg" ? "/kg" : ""}
+          ${item.preco == null ? "" : " · Subtotal: " + moeda(item.preco * item.quantidade)}
+        </div>
+      </div>
+      <div class="cart-item-actions">
+        <button data-cart-action="menos" data-name="${escaparHTML(item.nome)}" aria-label="Diminuir">−</button>
+        <strong>${item.quantidade}</strong>
+        <button data-cart-action="mais" data-name="${escaparHTML(item.nome)}" aria-label="Aumentar">+</button>
+      </div>
+      <button class="cart-remove" data-cart-action="remover" data-name="${escaparHTML(item.nome)}">Remover item</button>
+    </div>
+  `).join("");
+
+  const temPrecoPendente = listaCompras.some(item => item.preco == null);
+
+  resumo.innerHTML = `
+    <div class="cart-total">
+      <span>Total estimado</span>
+      <span>${moeda(totalLista())}</span>
+    </div>
+    <p class="cart-note">
+      ${temPrecoPendente
+        ? "Alguns produtos estão com preço a consultar e não entram no total estimado."
+        : "Total estimado com base nos preços informados no site. Confirme os valores na loja."}
+    </p>
+  `;
+}
+
+function escaparHTML(valor) {
+  return String(valor).replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[caractere]);
+}
+
+/* Gera uma imagem JPG sem precisar de biblioteca externa */
+function gerarListaJPG() {
+  if (!listaCompras.length) {
+    alert("Adicione pelo menos um produto antes de gerar a lista.");
+    return;
+  }
+
+  const escala = 2;
+  const largura = 800;
+  const margem = 48;
+  const alturaLinha = 66;
+  const altura = 300 + listaCompras.length * alturaLinha + 120;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = largura * escala;
+  canvas.height = altura * escala;
+
+  const ctx = canvas.getContext("2d");
+  ctx.scale(escala, escala);
+
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, largura, altura);
+
+  ctx.fillStyle = "#e51d2a";
+  ctx.fillRect(0, 0, largura, 125);
+
+  ctx.fillStyle = "#ffd52a";
+  ctx.font = "bold 18px Arial";
+  ctx.fillText("MERCADO", margem, 38);
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 30px Arial";
+  ctx.fillText("OLIVEIRA & KERNE", margem, 78);
+
+  ctx.font = "16px Arial";
+  ctx.fillText("MINHA LISTA DE COMPRAS", margem, 105);
+
+  let y = 170;
+  ctx.fillStyle = "#222";
+  ctx.font = "bold 17px Arial";
+  ctx.fillText("PRODUTO", margem, y);
+  ctx.textAlign = "right";
+  ctx.fillText("QTD.", largura - margem - 100, y);
+  ctx.fillText("PREÇO", largura - margem, y);
+  ctx.textAlign = "left";
+
+  y += 22;
+  ctx.strokeStyle = "#ddd";
+  ctx.beginPath();
+  ctx.moveTo(margem, y);
+  ctx.lineTo(largura - margem, y);
+  ctx.stroke();
+
+  listaCompras.forEach(item => {
+    y += 37;
+    ctx.fillStyle = "#222";
+    ctx.font = "bold 16px Arial";
+
+    let nome = item.nome;
+    while (ctx.measureText(nome).width > 390 && nome.length > 5) {
+      nome = nome.slice(0, -4) + "...";
+    }
+
+    ctx.fillText(nome, margem, y);
+
+    ctx.textAlign = "right";
+    ctx.font = "16px Arial";
+    ctx.fillText(String(item.quantidade), largura - margem - 100, y);
+    ctx.fillText(
+      item.preco == null
+        ? "Consultar"
+        : moeda(item.preco * item.quantidade),
+      largura - margem,
+      y
+    );
+    ctx.textAlign = "left";
+
+    ctx.font = "12px Arial";
+    ctx.fillStyle = "#777";
+    ctx.fillText(
+      item.preco == null
+        ? "Preço a consultar"
+        : moeda(item.preco) + (item.unidade === "kg" ? "/kg" : "") + " por unidade",
+      margem,
+      y + 18
+    );
+
+    ctx.strokeStyle = "#eee";
+    ctx.beginPath();
+    ctx.moveTo(margem, y + 29);
+    ctx.lineTo(largura - margem, y + 29);
+    ctx.stroke();
+
+    y += 29;
+  });
+
+  y += 25;
+  ctx.fillStyle = "#147b43";
+  ctx.font = "bold 24px Arial";
+  ctx.fillText("Total estimado: " + moeda(totalLista()), margem, y);
+
+  y += 35;
+  ctx.fillStyle = "#666";
+  ctx.font = "13px Arial";
+  ctx.fillText("Confira preços e disponibilidade diretamente na loja.", margem, y);
+
+  y += 25;
+  ctx.fillText("Mercado Oliveira & Kerne · Rechan, Itapetininga - SP", margem, y);
+
+  canvas.toBlob(blob => {
+    if (!blob) {
+      alert("Não foi possível gerar a imagem. Tente novamente.");
+      return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "lista-de-compras-oliveira-kerne.jpg";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }, "image/jpeg", 0.95);
+}
+
 function renderizarProdutos(filtro = "Todos") {
   const grade = document.getElementById("productGrid");
   if (!grade) return;
@@ -112,6 +542,56 @@ function renderizarProdutos(filtro = "Todos") {
   const produtosFiltrados = CONFIG.produtos.filter(produto =>
     filtro === "Todos" || produto.categoria === filtro
   );
+
+  if (!produtosFiltrados.length) {
+    grade.innerHTML = '<p class="empty-products">Nenhum produto encontrado nesta categoria.</p>';
+    return;
+  }
+
+  grade.innerHTML = produtosFiltrados.map(produto => {
+    const imagem = produto.imagem
+      ? `<img class="product-image" src="./${escaparHTML(produto.imagem)}" alt="${escaparHTML(produto.nome)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`
+      : "";
+
+    const precoHTML = produto.preco == null
+      ? '<span class="price-to-check">Preço a consultar</span>'
+      : `${formatarPreco(produto.preco)}${produto.unidade === "kg" ? '<small>/kg</small>' : ""}`;
+
+    const quantidade = quantidadeNaLista(produto.nome);
+
+    return `
+      <article class="product-card">
+        <div class="product-photo">
+          ${imagem}
+          <div class="product-emoji" style="${produto.imagem ? "display:none" : "display:flex"}">🛒</div>
+          <span class="product-badge">OFERTA</span>
+        </div>
+        <div class="product-info">
+          <span class="product-category">${escaparHTML(produto.categoria)}</span>
+          <h3 class="product-name">${escaparHTML(produto.nome)}</h3>
+          <div class="product-price">${precoHTML}</div>
+
+          <button
+            type="button"
+            class="add-to-shopping-list"
+            data-add-product="${escaparHTML(produto.nome)}">
+            ${quantidade ? "✓ Na lista (" + quantidade + ") · +" : "＋ Adicionar"}
+          </button>
+
+          <a class="product-whatsapp" href="${criarLinkWhatsApp(produto)}" target="_blank" rel="noopener">
+            Consultar pelo WhatsApp ↗
+          </a>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  grade.querySelectorAll("[data-add-product]").forEach(botao => {
+    botao.addEventListener("click", () => {
+      adicionarProduto(botao.dataset.addProduct);
+    });
+  });
+}
 
   if (!produtosFiltrados.length) {
     grade.innerHTML = '<p class="empty-products">Nenhum produto encontrado nesta categoria.</p>';
@@ -198,6 +678,35 @@ function inicializarSite() {
   configurarFiltros();
   configurarWhatsApp();
   configurarMenu();
+  configurarCarrinho();
+
+  const ano = document.getElementById("year");
+  if (ano) ano.textContent = new Date().getFullYear();
+
+  const endereco = document.getElementById("addressText");
+  if (endereco) endereco.textContent = CONFIG.endereco;
+
+  const mapa = document.getElementById("mapLink");
+  if (mapa) {
+    mapa.href = CONFIG.mapaUrl;
+    mapa.target = "_blank";
+    mapa.rel = "noopener";
+  }
+}
+
+  const ano = document.getElementById("year");
+  if (ano) ano.textContent = new Date().getFullYear();
+
+  const endereco = document.getElementById("addressText");
+  if (endereco) endereco.textContent = CONFIG.endereco;
+
+  const mapa = document.getElementById("mapLink");
+  if (mapa) {
+    mapa.href = CONFIG.mapaUrl;
+    mapa.target = "_blank";
+    mapa.rel = "noopener";
+  }
+}
 
   const ano = document.getElementById("year");
   if (ano) ano.textContent = new Date().getFullYear();
