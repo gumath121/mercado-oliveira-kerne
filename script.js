@@ -8,7 +8,6 @@ const CONFIG = {
     // MERCEARIA
     { nome: "Arroz Camil 5 kg", categoria: "Mercearia", imagem: "camil.jpg", preco: 21.19, unidade: "pacote" },
     { nome: "Café Mantiqueira 500 g", categoria: "Mercearia", imagem: "Mantiqueira.jpeg", preco: 17.98, unidade: "pacote" },
-    { nome: "Açúcar cristal 5 kg", categoria: "Mercearia", imagem: "cristal.jpg", preco: 13.48, unidade: "pacote" },
     { nome: "Feijão Camil 1 kg", categoria: "Mercearia", imagem: "feijaocamil.jpeg", preco: 7.49, unidade: "pacote" },
     { nome: "Óleo Soya 900 ml", categoria: "Mercearia", imagem: "soya.jpeg", preco: 7.78, unidade: "unidade" },
     { nome: "Leite condensado Italac 395 g", categoria: "Mercearia", imagem: "leiteconditalac.png", preco: 6.48, unidade: "unidade" },
@@ -35,14 +34,16 @@ const CONFIG = {
     { nome: "Dadinho", categoria: "Mercearia", imagem: "dadinho.png", preco: 12.49, unidade: "unidade" },
     { nome: "Nobreli Duo", categoria: "Mercearia", imagem: "nobrelliduo.png", preco: 12.99, unidade: "unidade" },
     { nome: "Pão de alho", categoria: "Mercearia", imagem: "paodealho.png", preco: null, unidade: "pacote" },
+    { nome: "Iogurte Nestlé (bandeja)", categoria: "Mercearia", imagem: "iogurtenestle.png", preco: 8.98, unidade: "bandeja" },
+
+    // BEBIDAS
     { nome: "Suco Trink", categoria: "Bebidas", imagem: "sucotrink.png", preco: 0.89, unidade: "unidade" },
     { nome: "Refrigerante Kuat 2 L", categoria: "Bebidas", imagem: "Kuat.png", preco: 5.49, unidade: "garrafa" },
-    { nome: "Iogurte Nestlé (bandeja)", categoria: "Mercearia", imagem: null, preco: 8.98, unidade: "bandeja" },
 
     // LIMPEZA
     { nome: "Sabão em pó Brilhante", categoria: "Limpeza", imagem: "brilhante.png", preco: 10.48, unidade: "sachê" },
     { nome: "Sabão em pó Tixan 400 g", categoria: "Limpeza", imagem: "tixan400.png", preco: 4.99, unidade: "pacote" },
-    { nome: "Sabão em pó Tixan 1,6 kg", categoria: "Limpeza", imagem: "tixan16.png", preco: 19.98, unidade: "pacote" },
+    { nome: "Sabão em pó Tixan 1 kg", categoria: "Limpeza", imagem: "tixan16.png", preco: 19.98, unidade: "pacote" },
     { nome: "Omo líquido", categoria: "Limpeza", imagem: "omoliq.png", preco: 16.98, unidade: "unidade" },
     { nome: "Amaciante Downy", categoria: "Limpeza", imagem: "amaciantedowny.png", preco: 12.98, unidade: "unidade" },
     { nome: "Amaciante Ypê 2 L", categoria: "Limpeza", imagem: "amacianteype2l.png", preco: 10.79, unidade: "unidade" },
@@ -64,16 +65,16 @@ const CONFIG = {
     { nome: "Desodorante Monange", categoria: "Higiene", imagem: "desodorantemonange.png", preco: 10.89, unidade: "unidade" },
     { nome: "Shampoo Monange", categoria: "Higiene", imagem: "monageshampoo.png", preco: 6.98, unidade: "unidade" },
     { nome: "Condicionador Monange", categoria: "Higiene", imagem: "condicionadormonange.png", preco: 7.98, unidade: "unidade" },
-    { nome: "Hidratante Monange", categoria: "Higiene", imagem: null, preco: 7.98, unidade: "unidade" },
+    { nome: "Hidratante Monange", categoria: "Higiene", imagem: "hidramonange.png", preco: 7.98, unidade: "unidade" },
     { nome: "Creme para pentear Elseve", categoria: "Higiene", imagem: "cremepentearelseve.png", preco: 17.49, unidade: "unidade" },
-    { nome: "Kit shampoo Muel Baby", categoria: "Higiene", imagem: null, preco: 19.98, unidade: "kit" },
+    { nome: "Kit shampoo Muel Baby", categoria: "Higiene", imagem: "baby.png", preco: 19.98, unidade: "kit" },
     { nome: "Papel higiênico Mili", categoria: "Higiene", imagem: "milipapelhigienico.png", preco: 12.49, unidade: "pacote" },
     { nome: "Fralda Turma da Mônica", categoria: "Higiene", imagem: "Fraldamonicababy.png", preco: 24.99, unidade: "pacote" },
     { nome: "Creme dental Barbie / Galinha Pintadinha", categoria: "Higiene", imagem: "galinhapintadinha.png", preco: 4.98, unidade: "unidade" },
 
     // AÇOUGUE
     { nome: "Bisteca suína", categoria: "Açougue", imagem: "bistecasuina.png", preco: 18.99, unidade: "kg" },
-    { nome: "Bisteca bovina", categoria: "Açougue", imagem: null, preco: 34.98, unidade: "kg" },
+    { nome: "Bisteca sete", categoria: "Açougue", imagem: "bistecasete.png", preco: 34.98, unidade: "kg" },
     { nome: "Costela bovina", categoria: "Açougue", imagem: "costelabovina.png", preco: 29.99, unidade: "kg" },
     { nome: "Carne moída", categoria: "Açougue", imagem: "carnemoida.png", preco: 31.99, unidade: "kg" },
     { nome: "Picadão bovino", categoria: "Açougue", imagem: "picadaobovino.png", preco: 33.98, unidade: "kg" },
@@ -157,7 +158,9 @@ function configurarFiltros() {
 }
 
 function configurarWhatsApp() {
-  const mensagem = encodeURIComponent("Olá! Vim pelo site do Mercado Oliveira & Kerne e gostaria de informações.");
+  const mensagem = encodeURIComponent(
+    "Olá! Vim pelo site do Mercado Oliveira & Kerne e gostaria de informações."
+  );
   const link = `https://wa.me/${CONFIG.whatsapp}?text=${mensagem}`;
 
   document.querySelectorAll("[data-whatsapp]").forEach(elemento => {
