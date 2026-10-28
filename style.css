@@ -303,35 +303,59 @@ button{font:inherit}
   }
 }
 
-
 /* PREÇOS COM MAIS DESTAQUE */
 .product-info .price-line {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 5px;
-  margin-top: 12px;
-  margin-bottom: 14px;
+  margin-top: 14px;
+  margin-bottom: 16px;
 }
 
 .product-info .price-line .currency {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 900;
   color: var(--red);
 }
 
 .product-info .price-line .price {
   font-family: "Paytone One", sans-serif;
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 900;
   line-height: 1.2;
   color: var(--red);
+  letter-spacing: -0.5px;
+  text-shadow: 0.3px 0 currentColor;
 }
 
 .product-info .price-line .unit {
-  font-size: 11px;
-  font-weight: 700;
-  color: #555;
+  font-size: 12px;
+  font-weight: 800;
+  color: #444;
+}
+
+/* PREÇOS NO CELULAR */
+@media (max-width: 720px) {
+  .product-info .price-line .price {
+    font-size: 27px;
+  }
+
+  .product-info .price-line .currency {
+    font-size: 15px;
+  }
+
+  .product-info .price-line .unit {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-info .price-line .price {
+    font-size: 24px;
+  }
+}
+
 }
 
 /* FOTOS COM ÁREA PADRONIZADA */
